@@ -6,18 +6,113 @@ body {
 	/*background: #bdc3c7 !important;*/
 }
 
-canvas.shape-choice {
+a {
+	text-decoration: none!important;
+}
+
+section#game-board {
+	margin-bottom: 50px;
+}
+
+div.game-board-row {
+	height:100px;
+	border: 1px solid #fff;
+	display:flex;
+}
+
+
+div.shape-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+div.shape-choice {
 	background-color: #2980b9;
-	width:80%;
-	height:150px;
+	width:25%!important;
+	height:100px;
 	margin: 40px 25px;
 	border-radius: 20px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
 }
+
+#current-turn-symbol {
+	width:20%;
+	background:  #2980b9;
+	color:#fff!important;
+}
+
+div.shape-choice:hover, .board-slot {
+	cursor: pointer;
+}
+
+div.board-slot {
+	width:33%;
+	height:104px;
+	background: #fff!important;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#game-board .container {
+	width:80%;
+	margin: 0 auto;
+	text-align: center;
+	margin-top:30px;
+}
+
+#game-state .container{
+	margin-bottom:80px;
+}
+
+#game-state h3 {
+	font-weight:bold;
+	font-family:'Montserrat', sans-sarif;
+}
+
+#slot-1, #slot-4, #slot-7 {
+	border-right: 3px solid #2980b9!important;
+}
+
+#slot-2, #slot-5, #slot-8 {
+	border-left:3px solid #2980b9!important;
+	border-right:3px solid #2980b9!important;
+}
+
+#slot-3, #slot-6, #slot-9 {
+	border-left: 3px solid #2980b9!important;
+}
+
+#slot-1, #slot-2, #slot-3 {
+	border-bottom:3px solid #2980b9!important;
+}
+
+#slot-4, #slot-5, #slot-6 {
+	border-top: 3px solid #2980b9!important;
+	border-bottom: 3px solid #2980b9!important;
+}
+
+#slot-7, #slot-8, #slot-9 {
+	border-top:3px solid #2980b9!important;
+}
+
 
 #shape-selection h3{
 	font-family: 'Montserrat', sans-sarif!important;
 	font-size:2em;
 	font-weight: bold;
+}
+
+
+.shape-choice i {
+	color:#fff!important;
+}
+
+.board-slot i {
+	color: #2980b9!important;
 }
 
 .container .nomargin {
@@ -34,11 +129,7 @@ canvas.shape-choice {
 	margin: 50px 0;
 }
 
-.shape-container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
+
 
 /* Navigation Styling */
 
