@@ -1,4 +1,4 @@
-//JS and jQuery for RQ
+//JS and jQuery
 $('document').ready(function(){
 	$('#game-board').hide();
 	$('#game-state').hide();
@@ -21,7 +21,7 @@ var PlayerWinState = { 'slot-1': false,
 'slot-9': false
 }
 
-var ComputerWinState = { one: false,
+var ComputerWinState = { 'slot-1': false,
 	'slot-2' : false,
 	'slot-3' :false,
 	'slot-4' : false,
@@ -32,6 +32,7 @@ var ComputerWinState = { one: false,
 	'slot-9': false
 }
 
+var GameOver = true;
 
 var CrossIcon = '<i class="fa fa-times fa-5x"></i>';
 var CircleIcon = '<i class="fa fa-circle-o fa-5x"></i>';
@@ -69,9 +70,33 @@ var selectShape = function(elem){
 
 
 var resetGame = function(){
-	$('div .board-slot').removeClass('occupied player computer').html('');
+	console.log('from resetGame');
 	$('#game-board').hide();
 	$('#game-state').hide();
+	var boardSlotIds = ['#slot-1', 
+		'#slot-2', 
+		'#slot-3',
+		'#slot-4', 
+		'#slot-5', 
+		'#slot-6', 
+		'#slot-7', 
+		'#slot-8', 
+		'#slot-9'];
+
+	var addedClasses = ['occupied', 'computer', 'player'];
+	$('.board-slot').html('');
+	for(var id = 0; id < boardSlotIds.length; id++){
+		for(var classItem = 0; classItem < addedClasses.length; classItem++){
+			if($(boardSlotIds[id]).hasClass(addedClasses[classItem])){
+				console.log(boardSlotIds[id]);
+				console.log(addedClasses[classItem]);
+				$(boardSlotIds[id]).removeClass(addedClasses[classItem]);
+			}
+		}
+	}	
+	
+
+	
 	$('#shape-selection').show();
 	PlayerChoice = '';
 	PlayerIcon = '';
@@ -97,19 +122,27 @@ var resetGame = function(){
 		'slot-8': false,
 		'slot-9': false
 	}
+
+	GameOver = true;
+	return;
 }
 
 var startGame = function(){
-
+	console.log('from startGame');
+	GameOver = false;
 	//determine who goes first
 	$('#game-board').show();
 	$('#game-state').show();
+	$('.current-turn').html(CrossIcon);
 	firstMoveDeterminer();
 
 }
 
 var placeShape = function(elem){
-
+	console.log('from placeShape');
+	if(GameOver){
+		return;
+	}
 	var elemToPlace;
 	var slotOwner;
 	var elemId = $(elem).attr('id');
@@ -140,6 +173,7 @@ var placeShape = function(elem){
 }
 
 var firstMoveDeterminer = function(){
+	console.log('from firstMoveDeterminer');
 	if(PlayerChoice === 'cross'){
 		$('.player-selection').html(CrossIcon);
 		PlayerTurn = true;
@@ -151,6 +185,7 @@ var firstMoveDeterminer = function(){
 } 
 
 var changeTurns = function(){
+	console.log('from changeTurns');
 	if(PlayerTurn){
 		PlayerTurn = false;
 		changeCurrentTurnDisplay('computer');
@@ -165,7 +200,10 @@ var changeTurns = function(){
 }
 
 var computerMoves = function(){
-
+	console.log('from computerMoves');
+	if(GameOver){
+		return;
+	}
 	for(var i = 1; i < 10; i++){
 		if(!$('#slot-' + i).hasClass('occupied')){
 			window.setTimeout(function(){placeShape($('#slot-' + i));}, 1000);
@@ -177,17 +215,21 @@ var computerMoves = function(){
 }
 
 
+
 var changeCurrentTurnDisplay = function(turn){
+	console.log('from changeCurrentTurnDisplay');
 	turn === 'player' ? $('.current-turn').html(PlayerIcon) : $('.current-turn').html(ComputerIcon);
 }
 
 
 var checkBoardState = function(){
+	console.log('from checkBoardState');
 	PlayerTurn ? checkForWin('computer') : checkForWin('player');
 }
 
 
 var checkForWin = function(player){
+	console.log('from checkForWin');
 	var p;
 	if(player === 'player'){
 		p = PlayerWinState;
@@ -213,6 +255,7 @@ var blockPlayer = function(){
 
 
 var endGame = function(player){
+	console.log('from endGame');
 	if(player === 'player'){
 		alert('Congrats! You win.');
 
@@ -220,4 +263,5 @@ var endGame = function(player){
 		alert('You lose. Try again.');
 	}
 	resetGame();
+	return;
 }
